@@ -147,7 +147,7 @@ source ~/.bashrc
 - **Hadoop NameNode**: http://localhost:9870
 - **YARN ResourceManager**: http://localhost:8088
 
-## 📁 项目结构
+<!-- ## 📁 项目结构
 
 ```
 bigdata-env/
@@ -175,7 +175,7 @@ bigdata-env/
     ├── 2-spark-hadoop/
     ├── 3-spark-hadoop-hive/
     └── 4-spark-hadoop-hive-jupyterlab/
-```
+``` -->
 
 ## 📚 参考资料
 
