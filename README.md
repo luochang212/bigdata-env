@@ -95,6 +95,10 @@ MYSQL_ROOT_PASSWORD=[your-secure-password]
 ### 3. 构建和启动服务
 
 ```bash
+# 对于 Windows 用户，需要转换为 Unix 换行符
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+# .\convert.ps1
+
 # 构建镜像（首次运行或更新 Dockerfile 后）
 docker compose build --no-cache
 
@@ -131,6 +135,9 @@ docker exec -it spark-hadoop-hive-master /opt/miniconda3/bin/jupyter lab list
 进入 JupyterLab 后，需要执行以下命令，才能使用 Hive 和 Spark：
 
 ```bash
+# 在 JupyterLab 的 Terminal 里进入 bash
+bash
+
 # 激活 conda 基础环境
 conda activate base
 
