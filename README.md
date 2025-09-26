@@ -68,7 +68,7 @@
 
 > [!WARNING]
 >
-> 1. `hive-site.xml` 与 `docker-compose.yml` 可能包含明文密码，请勿将包含真实密码的文件直接推送至公网仓库
+> 1. `hive-site.xml` 与 `docker-compose.yml` 可能包含明文密码，请勿将包含密码的文件推送至公网仓库
 > 2. 本项目密码仅作示例之用，请勿在生产环境中使用
 
 ### 1. 克隆项目
