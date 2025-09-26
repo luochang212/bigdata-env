@@ -3,7 +3,7 @@
 services:
   mysql:
     image: mysql:8.0
-    platform: linux/amd64
+    # platform: linux/amd64
     hostname: mysql
     container_name: hive-mysql
     networks:
@@ -30,7 +30,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: spark-hadoop-hive:latest
-    platform: linux/amd64
+    # platform: linux/amd64
     hostname: master
     container_name: spark-hadoop-hive-master
     networks:
@@ -63,7 +63,7 @@ services:
 
   spark-worker-1:
     image: spark-hadoop-hive:latest
-    platform: linux/amd64
+    # platform: linux/amd64
     hostname: worker1
     container_name: spark-hadoop-hive-worker-1
     networks:
@@ -87,7 +87,7 @@ services:
 
   spark-worker-2:
     image: spark-hadoop-hive:latest
-    platform: linux/amd64
+    # platform: linux/amd64
     hostname: worker2
     container_name: spark-hadoop-hive-worker-2
     networks:

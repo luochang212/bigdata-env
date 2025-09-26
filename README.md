@@ -1,16 +1,16 @@
 
-# 大数据环境 (BigData Environment)
+# bigdata-env
 
-基于 Docker 的完整大数据开发环境，集成了 Spark、Hadoop、Hive 和 JupyterLab，适用于大数据学习、开发和测试。
+基于 Docker Compose 部署大数据开发环境，集成了 Spark、Hadoop、Hive 和 JupyterLab。
 
-## 🚀 技术栈
+<!-- ## 🚀 技术栈
 
 - **Apache Spark** - 分布式计算引擎
 - **Apache Hadoop** - 分布式存储和资源管理
 - **Apache Hive** - 数据仓库软件
 - **JupyterLab** - 交互式开发环境
 - **MySQL** - Hive 元数据存储
-- **Miniconda** - Python 环境管理
+- **Miniconda** - Python 环境管理 -->
 
 ## 📋 环境要求
 
@@ -44,10 +44,10 @@
           │                       │                       │
           └───────────────────────┼───────────────────────┘
                                   │
-                         ┌────────────────────┐
-                         │       MySQL        │
-                         │ (Metadata Storage) │
-                         └────────────────────┘
+                        ┌────────────────────┐
+                        │       MySQL        │
+                        │ (Metadata Storage) │
+                        └────────────────────┘
 ```
 
 ### 端口映射
@@ -89,7 +89,8 @@ MYSQL_ROOT_PASSWORD=[your-secure-password]
 
 > [!WARNING]
 > 
-> `hive-site.xml` 与 `docker-compose.yml` 中可能包含明文密码，切勿将包含真实密码的文件推送至公网仓库。本仓库密码仅作示例之用，故而无妨。
+> 1. `hive-site.xml` 与 `docker-compose.yml` 可能包含明文密码，请勿将包含真实密码的文件推送至公网仓库
+> 2. 本项目密码仅作示例之用，请勿在生产环境中使用
 
 ### 3. 构建和启动服务
 
