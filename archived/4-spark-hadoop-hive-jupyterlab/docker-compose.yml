@@ -1,0 +1,117 @@
+# Configured for Apple Silicon (M1/M2) Macs with platform: linux/amd64
+
+services:
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    hostname: mysql
+    container_name: hive-mysql
+    networks:
+      - bigdata-base-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=hive_metastore
+      - MYSQL_USER=hive
+      - MYSQL_PASSWORD=hive123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      timeout: 10s
+      retries: 3
+      interval: 10s
+      start_period: 20s
+
+  spark:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: spark-hadoop-hive:latest
+    platform: linux/amd64
+    hostname: master
+    container_name: spark-hadoop-hive-master
+    networks:
+      - bigdata-base-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - HIVE_DB_USER=hive
+      - HIVE_DB_PASSWORD=hive123
+    volumes:
+      - ./share:/opt/share
+    ports:
+      - '8080:8080'
+      - '4040:4040'
+      - '7077:7077'
+      - '8088:8088'
+      - '8042:8042'
+      - '9870:9870'
+      - '19888:19888'
+      - '9083:9083'
+      - '10000:10000'
+      - '8888:8888'
+    command: bash /opt/start-master.sh --install-miniconda
+
+  spark-worker-1:
+    image: spark-hadoop-hive:latest
+    platform: linux/amd64
+    hostname: worker1
+    container_name: spark-hadoop-hive-worker-1
+    networks:
+      - bigdata-base-network
+    depends_on:
+      - spark
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    volumes:
+      - ./share:/opt/share
+    ports:
+      - '8081:8081'
+    command: bash /opt/start-worker.sh
+
+  spark-worker-2:
+    image: spark-hadoop-hive:latest
+    platform: linux/amd64
+    hostname: worker2
+    container_name: spark-hadoop-hive-worker-2
+    networks:
+      - bigdata-base-network
+    depends_on:
+      - spark
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    volumes:
+      - ./share:/opt/share
+    ports:
+      - '8082:8081'
+    command: bash /opt/start-worker.sh
+
+networks:
+  bigdata-base-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
