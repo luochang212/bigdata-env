@@ -9,7 +9,7 @@
 ```bash
 hdfs dfs -mkdir -p /user/root
 
-hdfs dfs -put -f /opt/share/data/PRSA_data_2010.1.1-2014.12.31.csv /user/root/
+hdfs dfs -put -f /opt/share/spark_data/PRSA_data_2010.1.1-2014.12.31.csv /user/root/
 
 hdfs dfs -ls /user/root/
 ```

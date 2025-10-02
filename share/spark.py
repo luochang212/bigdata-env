@@ -5,7 +5,7 @@ def create_spark():
     spark = (
         SparkSession.builder
         .master("yarn")  # yarn local[*]
-        .appName("PRSA-Analysis")
+        .appName("Data-Analysis")
         .getOrCreate()
     )
     return spark

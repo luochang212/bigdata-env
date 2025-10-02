@@ -3,11 +3,11 @@
 #   spark-submit --version
 ## 2. 将数据上传到 HDFS
 #   hdfs dfs -mkdir -p /user/root
-#   hdfs dfs -put -f /opt/share/data/PRSA_data_2010.1.1-2014.12.31.csv /user/root/
+#   hdfs dfs -put -f /opt/share/spark_data/PRSA_data_2010.1.1-2014.12.31.csv /user/root/
 #   hdfs dfs -ls /user/root/
 ## 3. 提交 Spark 任务
 #   bash submit.sh
-## 3. 检查结果
+## 4. 检查结果
 #   hdfs dfs -ls /user/root/season_avg
 #   hdfs dfs -cat /user/root/season_avg/part-00000-* | head -n 10
 
@@ -24,7 +24,7 @@ PY_BIN=$(which python)
 spark-submit \
   --master yarn \
   --deploy-mode cluster \
-  --name explore-task \
+  --name data-analysis-task \
     --conf spark.executor.memory=4g \
     --conf spark.dynamicAllocation.minExecutors=800 \
     --conf spark.pyspark.driver.python=$PY_BIN \
@@ -33,9 +33,9 @@ spark-submit \
     --num-executors 2 \
     --executor-memory 2g \
     --driver-memory 1g \
-    /opt/share/explore.py
+    /opt/share/spark.py
 
 ## 以 Standalone 模式运行
 # spark-submit \
 #   --master spark://master:7077 \
-#   /opt/share/explore.py
+#   /opt/share/spark.py
