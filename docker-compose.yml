@@ -12,7 +12,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=hive_metastore
       - MYSQL_USER=hive
-      - MYSQL_PASSWORD=hive123
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
@@ -45,7 +45,7 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - HIVE_DB_USER=hive
-      - HIVE_DB_PASSWORD=hive123
+      - HIVE_DB_PASSWORD=${HIVE_DB_PASSWORD}
     volumes:
       - ./share:/opt/share
     ports:

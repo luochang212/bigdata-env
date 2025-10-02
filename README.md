@@ -3,15 +3,6 @@
 
 基于 Docker Compose 部署大数据开发环境，集成了 Spark、Hadoop、Hive 和 JupyterLab。
 
-<!-- ## 🚀 技术栈
-
-- **Apache Spark** - 分布式计算引擎
-- **Apache Hadoop** - 分布式存储和资源管理
-- **Apache Hive** - 数据仓库软件
-- **JupyterLab** - 交互式开发环境
-- **MySQL** - Hive 元数据存储
-- **Miniconda** - Python 环境管理 -->
-
 ## 📋 环境要求
 
 ### 系统要求
@@ -79,18 +70,20 @@ git clone <repository-url>
 cd bigdata-env
 ```
 
-### 2. 环境配置
+### 2. 配置 `.env` 文件
 
-复制环境变量模板并设置 MySQL 密码：
+复制 `.env` 文件模版，创建你的 `.env` 文件：
 
 ```bash
 cp .env.example .env
 ```
 
-编辑 `.env` 文件，设置 MySQL root 密码：
+编辑 `.env` 文件，更新密码（可选）：
 
 ```bash
-MYSQL_ROOT_PASSWORD=[your-secure-password]
+MYSQL_ROOT_PASSWORD=[your-mysql-root-password]
+MYSQL_PASSWORD=[your-mysql-password]
+HIVE_DB_PASSWORD=[your-hive-db-password]
 ```
 
 ### 3. 构建和启动服务
@@ -136,27 +129,18 @@ JupyterLab 地址：[http://localhost:8888/lab](http://localhost:8888/lab)
 docker exec -it spark-hadoop-hive-master /opt/miniconda3/bin/jupyter lab list
 ```
 
-进入 JupyterLab 后，需要执行以下命令，才能使用 Hive 和 Spark：
+进入 JupyterLab 后，可以直接使用 Hive 和 Spark：
 
 ```bash
-# 在 JupyterLab 的 Terminal 里进入 bash
-bash
+# 验证 Hive 服务可用
+hive -e 'SHOW DATABASES;'
 
-# 激活 conda 基础环境
-conda activate base
+# 确认 Spark 服务可用
+pyspark
 
-# 重新加载环境变量配置
-source ~/.bashrc
+# 也可启动 Spark 交互式命令行
+spark-shell
 ```
-
-> **注意**: 这些命令在每次重启命令行后需要重新执行。
-
-<!-- ### 7. 访问 Web 界面
-
-- **JupyterLab**: http://localhost:8888/lab
-- **Spark Master**: http://localhost:8080
-- **Hadoop NameNode**: http://localhost:9870
-- **YARN ResourceManager**: http://localhost:8088 -->
 
 <!-- ## 📁 项目结构
 
